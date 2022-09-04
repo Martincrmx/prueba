@@ -28,6 +28,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="usuarios-box">
+					<?php if(isset($html)) echo $html ?>
 				</div>
 			</div>
 		</div>
