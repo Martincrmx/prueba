@@ -6,4 +6,17 @@
 
 /********* CONTENIDO **********/
 
+.row-usuario{
+	margin-bottom: 40px;
+}
+
+.usuario-box{
+	text-align: center;
+}
+
+.btn-detalle{
+	background: #000;
+	border: 1px solid #000;
+}
+
 /********* FOOTER ***********/

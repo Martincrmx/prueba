@@ -9,7 +9,7 @@
 	<!-- HOJAS DE ESTILO -->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/style_gral.css">
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
 </head>
 <body>
 	<header>
@@ -32,10 +32,47 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="usuarios-detalle">
+				</div>
+			</div>
+		</div>
 	</div>
 	<!-- INCLUIR SCRIPTS -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('.btn-detalle').click(function(e){
+				e.preventDefault();
+				var id = $(this).data('id');
+				var action = "verDetalles";
+				$.ajax({
+	                  url: 'includes/consultas.php',
+	                  type: 'post',
+	                  dataType: 'json',
+	                  cache: false,
+	                  data: {action:action, id:id},
+	                  success: function(data) {
+	                    console.log(data);
+	                      if(data.mensaje == 'error')
+	                      {
+	                          
+	                          return false;
+
+
+	                      }
+	                      else if(data.mensaje == 'success'){
+	                        
+	                     
+	                      }
+	                  }       
+	              }); 
+			});
+		})
+	</script>
 
 </body>
 </html>
