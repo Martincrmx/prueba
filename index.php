@@ -2,7 +2,8 @@
 <html>
 <head>
 	<title>Ejercicio</title>
-
+	<!-- LLAMADA AL ARCHIVO CONSULTA -->
+	<?php require_once('includes/consultas.php'); ?>
 	<!-- HOJAS DE ESTILO -->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/style_gral.css">
