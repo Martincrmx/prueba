@@ -53,29 +53,27 @@
 	<script>
 		$(document).ready(function(){
 			
-			mostrarUsuarios();
+			mostrarUsuarios(); // INICIAMOS CON LA FUNCIÓN MOTRAR USUARIOS
 			$('#seleccionar').change(function(e) {
 				e.preventDefault();
-				var seleccion = $(this).val();
-				var action = "ordenar";
-				if(seleccion != 0){ 
-					$.ajax({
+				var seleccion = $(this).val(); // OBTENEMOS VALOR DEL SELECTOR
+				var action = "ordenar"; // DECLARAMOS VARIABLE ACCIÓN
+				if(seleccion != 0){  // SI EL SELECTOR ES DIFERENTE A 0
+					$.ajax({ // EJECUTAMOS FUNCIONA AJAX
 	                  url: 'includes/consultas.php',
 	                  type: 'post',
 	                  dataType: 'json',
 	                  cache: false,
-	                  data: {action:action, ordenar:seleccion},
-	                  success: function(data) {
+	                  data: {action:action, ordenar:seleccion}, // ENVIAMOS VARIABLES
+	                  success: function(data) { // RETORNO DE AJAX
 	                      if(data.mensaje == 'error')
 	                      {
-	                          
 	                          return false;
 
-
 	                      }
-	                      else if(data.mensaje == 'success'){
-	                      	$('.usuarios-box').html(data.info);
-	                      	 $('html, body').stop().animate({
+	                      else if(data.mensaje == 'success'){ // SI ES SUCCESS LA RESPUESTA 
+	                      	$('.usuarios-box').html(data.info); // AGREGAMOS INFO A DIV CON CLASS USUARIOS-BOX
+	                      	 $('html, body').stop().animate({ // HACEMOS UN SCROLL HACIA EL DIV
 		                        scrollTop: jQuery('.usuarios-box').offset().top
 		                    }, 1000);
 	                     
@@ -89,13 +87,13 @@
 			});
 
 			function mostrarUsuarios(){
-				var action = "mostrar";
-				$.ajax({
+				var action = "mostrar"; // DECLARAMOS VARIABLE ACCIÓN
+				$.ajax({ // EJECUTAMOS FUNCIONA AJAX
 	                  url: 'includes/consultas.php',
 	                  type: 'post',
 	                  dataType: 'json',
 	                  cache: false,
-	                  data: {action:action},
+	                  data: {action:action}, // ENVIAMOS VARIABLES
 	                  success: function(data) {
 	                      if(data.mensaje == 'error')
 	                      {
@@ -104,9 +102,9 @@
 
 
 	                      }
-	                      else if(data.mensaje == 'success'){
-	                      	$('.usuarios-box').html(data.info);
-	                      	 $('html, body').stop().animate({
+	                      else if(data.mensaje == 'success'){ // SI ES SUCCESS LA RESPUESTA 
+	                      	$('.usuarios-box').html(data.info); // AGREGAMOS INFO A DIV CON CLASS USUARIOS-BOX
+	                      	 $('html, body').stop().animate({ // HACEMOS UN SCROLL HACIA EL DIV
 		                        scrollTop: jQuery('.usuarios-box').offset().top
 		                    }, 1000);
 	                     

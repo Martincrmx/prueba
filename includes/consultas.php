@@ -12,13 +12,13 @@ if(isset($_POST['action']) && $_POST['action'] == "verDetalles"){
 	// LLAMAMOS A LA FUNCION ARMAR HTML
 	$html = $consultaHtml->armarHtml($usuarios, NULL, $id);
 
-	if($html != NULL){
+	if($html != NULL){ // SI VARIABLE HTML ES DIFERENTE A NULL
 		$data['info'] = $html;
-		$data['mensaje'] = "success";
+		$data['mensaje'] = "success";  // ENVIAMOS UN MENSAJE DE SUCESS
 	}
 	else{
 		$data['info'] = "";
-		$data['mensaje'] = "error";
+		$data['mensaje'] = "error"; // ENVIAMOS UN MENSAJE DE ERROR
 
 	}
 
@@ -38,11 +38,11 @@ else if(isset($_POST['action']) && $_POST['action'] == "ordenar"){
 
 	if($html != NULL){
 		$data['info'] = $html;
-		$data['mensaje'] = "success";
+		$data['mensaje'] = "success"; // ENVIAMOS MENSAJE DE SUCCESS
 	}
 	else{
 		$data['info'] = "";
-		$data['mensaje'] = "error";
+		$data['mensaje'] = "error"; // ENVIAMOS UN MENSAJE DE ERROR
 
 	}
 
@@ -62,13 +62,13 @@ else if(isset($_POST['action']) && $_POST['action'] == "mostrar"){
 	// LLAMAMOS A LA FUNCION ARMAR HTML
 	$html = $consultaHtml->armarHtml($usuarios, "asc");
 
-	if($html != NULL){
+	if($html != NULL){ // SI LA VARIABLE ES DIFERENTE A NULL
 		$data['info'] = $html;
-		$data['mensaje'] = "success";
+		$data['mensaje'] = "success"; // ENVIAMOS MENSAJE DE SUCCESS
 	}
-	else{
+	else{ // SI ES NULL
 		$data['info'] = "";
-		$data['mensaje'] = "error";
+		$data['mensaje'] = "error"; // ENVIAMOS UN MENSAJE DE ERROR
 
 	}
 
