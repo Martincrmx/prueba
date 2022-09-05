@@ -63,4 +63,18 @@
 	background: #cfcfcf;
 }
 
+.ordenar-box{
+	text-align: right;
+	padding: 0px 2%;
+	margin-top: 30px;
+}
+
+.ordenar-box select{
+	padding: 10px 14px;
+    border-radius: 15px;
+    border: 2px solid #02445c;
+    font-size: 16px;
+    font-weight: 600;
+}
+
 /********* FOOTER ***********/

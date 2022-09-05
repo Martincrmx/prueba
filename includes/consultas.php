@@ -24,7 +24,32 @@ if(isset($_POST['action']) && $_POST['action'] == "verDetalles"){
 
 	echo json_encode($data);
 }
-if(!$_POST){
+else if(isset($_POST['action']) && $_POST['action'] == "ordenar"){
+	// VARIABLES INICIALES
+	$ordenar = $_POST['ordenar'];
+	$consultar_url = "https://reqres.in/api/users/"; // ALMACENAMOS LA VARIABLE A CONSULTAR
+	$consultar = new Consulta(); 
+	// LLAMAMOS A LA FUNCIÓN CONSULTAR USUARIOS
+	$usuarios = $consultar->ConsultarUsuarios($consultar_url);
+	// INICIAMOS LA LLAMADA A LA CLASE HTML ESTRUCTURA
+	$consultaHtml = new HtmlEstructura(); 
+	// LLAMAMOS A LA FUNCION ARMAR HTML
+	$html = $consultaHtml->armarHtml($usuarios, $ordenar, NULL);
+
+	if($html != NULL){
+		$data['info'] = $html;
+		$data['mensaje'] = "success";
+	}
+	else{
+		$data['info'] = "";
+		$data['mensaje'] = "error";
+
+	}
+
+	echo json_encode($data);
+	
+}
+else if(isset($_POST['action']) && $_POST['action'] == "mostrar"){
 	// VARIABLES INICIALES
 	$consultar_url = "https://reqres.in/api/users/"; // ALMACENAMOS LA VARIABLE A CONSULTAR
 
@@ -36,6 +61,18 @@ if(!$_POST){
 	$consultaHtml = new HtmlEstructura(); 
 	// LLAMAMOS A LA FUNCION ARMAR HTML
 	$html = $consultaHtml->armarHtml($usuarios, "asc");
+
+	if($html != NULL){
+		$data['info'] = $html;
+		$data['mensaje'] = "success";
+	}
+	else{
+		$data['info'] = "";
+		$data['mensaje'] = "error";
+
+	}
+
+	echo json_encode($data);
 }
 
 
@@ -90,6 +127,37 @@ if(!$_POST){
 									</div>
 								</div>
 							</div>
+							<script>
+								$('body').on('click', '.btn-detalle',  function(e){
+									e.preventDefault();
+									var id = $(this).data('id');
+									var action = 'verDetalles';
+									$.ajax({
+					                  url: 'includes/consultas.php',
+					                  type: 'post',
+					                  dataType: 'json',
+					                  cache: false,
+					                  data: {action:action, id:id},
+					                  success: function(data) {
+					                    console.log(data);
+					                      if(data.mensaje == 'error')
+					                      {
+					                          
+					                          return false;
+
+
+					                      }
+					                      else if(data.mensaje == 'success'){
+					                      	$('.usuarios-detalle').html(data.info);
+					                      	 $('html, body').stop().animate({
+						                        scrollTop: jQuery('.usuarios-detalle').offset().top
+						                    }, 1000);
+					                     
+					                      }
+					                  }       
+					              });
+								});
+							</script>
 					";
 					$contador++;
 					if($contador == 3 || $i == count($usuarios_ordenados)){ // SI EL CONTADOR ES IGUAL A 3 O LA VARIABLE I ES IGUAL A EL TOTAL DEL ARRAY USUARIOS CERRAMOS EL DIV CON LA CLASE ROW

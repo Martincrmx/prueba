@@ -4,8 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>Ejercicio</title>
-	<!-- LLAMADA AL ARCHIVO CONSULTA -->
-	<?php require_once('includes/consultas.php'); ?>
+
 	<!-- HOJAS DE ESTILO -->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/style_gral.css">
@@ -24,7 +23,15 @@
 		</div>
 	</header>
 	<div class="container">
-		
+		<div class="row">
+			<div class="col-md-12 ordenar-box">
+				<select id="seleccionar">
+					<option value="0">Ordenar por</option>
+					<option value="asc">Ascendente</option>
+					<option value="desc">Descendente</option>
+				</select>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-md-12">
 				<div class="usuarios-box">
@@ -45,18 +52,20 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
 	<script>
 		$(document).ready(function(){
-			$('.btn-detalle').click(function(e){
+			
+			mostrarUsuarios();
+			$('#seleccionar').change(function(e) {
 				e.preventDefault();
-				var id = $(this).data('id');
-				var action = "verDetalles";
-				$.ajax({
+				var seleccion = $(this).val();
+				var action = "ordenar";
+				if(seleccion != 0){ 
+					$.ajax({
 	                  url: 'includes/consultas.php',
 	                  type: 'post',
 	                  dataType: 'json',
 	                  cache: false,
-	                  data: {action:action, id:id},
+	                  data: {action:action, ordenar:seleccion},
 	                  success: function(data) {
-	                    console.log(data);
 	                      if(data.mensaje == 'error')
 	                      {
 	                          
@@ -65,15 +74,46 @@
 
 	                      }
 	                      else if(data.mensaje == 'success'){
-	                      	$('.usuarios-detalle').html(data.info);
+	                      	$('.usuarios-box').html(data.info);
 	                      	 $('html, body').stop().animate({
-		                        scrollTop: jQuery('.usuarios-detalle').offset().top
+		                        scrollTop: jQuery('.usuarios-box').offset().top
 		                    }, 1000);
 	                     
 	                      }
 	                  }       
-	              }); 
+	              });
+				}
+				else{
+					return false;
+				}
 			});
+
+			function mostrarUsuarios(){
+				var action = "mostrar";
+				$.ajax({
+	                  url: 'includes/consultas.php',
+	                  type: 'post',
+	                  dataType: 'json',
+	                  cache: false,
+	                  data: {action:action},
+	                  success: function(data) {
+	                      if(data.mensaje == 'error')
+	                      {
+	                          
+	                          return false;
+
+
+	                      }
+	                      else if(data.mensaje == 'success'){
+	                      	$('.usuarios-box').html(data.info);
+	                      	 $('html, body').stop().animate({
+		                        scrollTop: jQuery('.usuarios-box').offset().top
+		                    }, 1000);
+	                     
+	                      }
+	                  }       
+	              });
+			}
 		})
 	</script>
 
