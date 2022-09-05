@@ -65,7 +65,10 @@
 
 	                      }
 	                      else if(data.mensaje == 'success'){
-	                        
+	                      	$('.usuarios-detalle').html(data.info);
+	                      	 $('html, body').stop().animate({
+		                        scrollTop: jQuery('.usuarios-detalle').offset().top
+		                    }, 1000);
 	                     
 	                      }
 	                  }       

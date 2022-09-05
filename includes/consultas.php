@@ -7,7 +7,22 @@ if(isset($_POST['action']) && $_POST['action'] == "verDetalles"){
 	$consulta = new Consulta(); 
 	// LLAMAMOS A LA FUNCIÓN CONSULTAR USUARIOS
 	$usuarios = $consulta->ConsultarUsuarios($consultar_url, $id);
-	var_dump($usuarios);
+	// INICIAMOS LA LLAMADA A LA CLASE HTML ESTRUCTURA
+	$consultaHtml = new HtmlEstructura(); 
+	// LLAMAMOS A LA FUNCION ARMAR HTML
+	$html = $consultaHtml->armarHtml($usuarios, NULL, $id);
+
+	if($html != NULL){
+		$data['info'] = $html;
+		$data['mensaje'] = "success";
+	}
+	else{
+		$data['info'] = "";
+		$data['mensaje'] = "error";
+
+	}
+
+	echo json_encode($data);
 }
 if(!$_POST){
 	// VARIABLES INICIALES
@@ -20,7 +35,7 @@ if(!$_POST){
 	// INICIAMOS LA LLAMADA A LA CLASE HTML ESTRUCTURA
 	$consultaHtml = new HtmlEstructura(); 
 	// LLAMAMOS A LA FUNCION ARMAR HTML
-	$html = $consultaHtml->armarHtml($usuarios, "asc", $id);
+	$html = $consultaHtml->armarHtml($usuarios, "asc");
 }
 
 
@@ -58,17 +73,19 @@ if(!$_POST){
 					}
 
 					// INICIAMOS EL ARMADO DEL HTML A MOSTRAR
-					$html .= "<div class='col-md-4 col-xs-12 usuario-box'>
-								<div class='img-box'>
-									<img src='".$usuarios_ordenados[$i]['avatar']."'>
-								</div>
-								<div class='usuario-info'>
-									<h5>".$usuarios_ordenados[$i]['first_name']." ".$usuarios_ordenados[$i]['last_name']."</h5>
-									<div class='usuarios-info-texto'>
-										<p><i class='fa fa-envelope' aria-hidden='true'></i>
-										".$usuarios_ordenados[$i]['email']."</p>
-										<div class='usuarios-btn'>
-											<a href='#' class='btn btn-primary btn-detalle' data-id='".$usuarios_ordenados[$i]['id']."'>Ver detalle</a>
+					$html .= "<div class='col-md-4 col-xs-12 usuario-col'>
+								<div class='usuario-box'>
+									<div class='img-box'>
+										<img src='".$usuarios_ordenados[$i]['avatar']."'>
+									</div>
+									<div class='usuario-info'>
+										<h5>".$usuarios_ordenados[$i]['first_name']." ".$usuarios_ordenados[$i]['last_name']."</h5>
+										<div class='usuarios-info-texto'>
+											<p><i class='fa fa-envelope' aria-hidden='true'></i>
+											".$usuarios_ordenados[$i]['email']."</p>
+											<div class='usuarios-btn'>
+												<a href='#' class='btn btn-primary btn-detalle' data-id='".$usuarios_ordenados[$i]['id']."'>Ver detalle</a>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -87,7 +104,25 @@ if(!$_POST){
 				return $html; // RETORNAMOS VARIABLE
 			}
 			else{
+				$html = "";// DECLARAMOS VARIABLE HTML PARA ALMACENAR ESTRUCTURA
+				$html .= "<div class='row'><div class='col-md-12'><h2>Detalles de Usuario</div></div>";
+				$html .= "<div class='row'>
+					<div class='col-md-12 detalle-bg'>
+						<div class='row'>
+							<div class='col-md-3 col-xs-12 img-detalle'>
+								<img src='".$usuarios['avatar']."'>
+							</div>
+							<div class='col-md-9 col-xs-12 info-detalle'>
+								<h4>ID: ".$usuarios['id']."</h4>
+								<h3>".$usuarios['first_name']." ".$usuarios['last_name']."</h3>
+								<div class='info-detalle-texto'><i class='fa fa-envelope' aria-hidden='true'></i> Email: <a href='mailto:".$usuarios['email']."'>".$usuarios['email']."</a></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				";
 
+				return $html;
 			}
 		}
 	}
